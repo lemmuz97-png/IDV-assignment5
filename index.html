@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Combined Assignments</title>
+    <title>Combined Assignments (Revised)</title>
     <style>
         /* --- Combined Root Variables from Assignments 2 and 3 --- */
         :root{
@@ -13,10 +13,10 @@
             --gap: 12px;
             --border: 1px solid #ddd;
             --bg: #fafafa;
-            --accent: #0b69ff;
+            --accent: #0b69ff; /* Blue */
 
             /* A3 Variables */
-            --ink:#111827;
+            --ink: #111827; /* Near Black for Text/Headers */
             --muted:#6b7280;
             --grid:#f3f4f6;
             --axis:#e5e7eb;
@@ -33,11 +33,12 @@
             margin: 0;
             padding: 24px;
             background: var(--bg);
-            color: #222;
+            color: var(--ink); /* Use ink for default text color */
         }
 
         .assignment-container {
-            max-width: 1200px;
+            /* Ensures consistent width across all main sections */
+            max-width: 850px; /* Set consistent max-width for A1, A2, and A3 content area */
             margin: 0 auto 4rem;
             padding-bottom: 2rem;
             border-bottom: 1px solid #ddd;
@@ -46,10 +47,11 @@
             border-bottom: none;
         }
         .assignment-container h2 {
+            /* Global H2 Styling */
             font-size: 24px;
             margin-top: 0;
             margin-bottom: 1.5rem;
-            color: var(--accent);
+            color: var(--ink); /* Requested: All headers black */
             border-bottom: 2px solid var(--accent);
             padding-bottom: 0.5rem;
         }
@@ -61,18 +63,20 @@
             align-items: center;
         }
         .assignment-1 h1 {
+            /* Inner H1 Styling */
             margin-bottom: 0.25rem;
-            font-size: 2rem; /* Keep separate from A2/A3 h1 */
+            font-size: 2rem;
+            color: var(--ink); /* Requested: All headers black */
         }
         #timestamp {
             font-size: 0.9rem;
-            color: #666;
+            color: var(--muted);
             margin-bottom: 1.5rem;
         }
         .assignment-1 table {
             border-collapse: collapse;
             width: 90%;
-            max-width: 800px;
+            max-width: 850px; /* Aligned with overall max-width */
             background: white;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
             border-radius: 10px;
@@ -84,7 +88,7 @@
             text-align: center;
         }
         .assignment-1 th {
-            background-color: #007aff;
+            background-color: var(--accent); /* Consistent color palette */
             color: white;
         }
         .assignment-1 tr:nth-child(even) {
@@ -99,10 +103,24 @@
 
 
         /* --- Assignment 2: SVG Effects Gallery Styles --- */
-        .assignment-2 h1{font-size:20px;margin:0 0 8px}
+        .assignment-2 h1{
+            font-size:20px;
+            margin:0 0 8px;
+            color: var(--ink); /* Requested: All headers black */
+        }
         .assignment-2 p.small{color:#444;margin:0 0 18px;font-size:14px}
-        table.gallery{border-collapse:collapse;width:100%;max-width:1200px;background:white;box-shadow:0 6px 18px rgba(20,20,20,0.06)}
-        table.gallery thead th{position:sticky;top:0;background:#fff;padding:10px;border-bottom:var(--border);text-align:center;font-weight:600}
+        table.gallery{
+            border-collapse:collapse;
+            width:100%;
+            max-width:850px; /* Aligned with overall max-width */
+            margin: 0 auto; /* Center the table within the section */
+            background:white;
+            box-shadow:0 6px 18px rgba(20,20,20,0.06)
+        }
+        table.gallery thead th{
+            position:sticky;top:0;background:#fff;padding:10px;border-bottom:var(--border);text-align:center;font-weight:600;
+            color: var(--ink); /* Requested: All headers black (table header) */
+        }
         table.gallery td{padding:10px;text-align:center;border-bottom:var(--border);vertical-align:middle}
         .thumb{
             width:var(--thumb-w);
@@ -114,10 +132,10 @@
             background:linear-gradient(180deg, #fff, #f7f9ff);
             padding:8px;
             border:1px solid #eee;
-            transition:transform .25s ease, filter .25s ease; /* transition included here from A2 JS file */
+            transition:transform .25s ease, filter .25s ease;
         }
 
-        /* effects - each applied individually */
+        /* effects - each applied individually (color palette used in JS) */
         .mirror{transform:scaleX(-1);}
         .rot180{transform:rotate(180deg);}
         .squeezeY{transform:scaleY(0.5);}
@@ -136,9 +154,18 @@
         }
 
         /* --- Assignment 3: Interactive Charts Styles --- */
-        .wrap{max-width:560px;margin:0 auto;padding:8px;display:grid;gap:8px;grid-template-columns:1fr}
+        .wrap{
+            /* This is the internal chart layout wrapper. Keeping its max-width narrow
+            while the assignment container controls the overall width for alignment. */
+            max-width:560px;
+            margin:0 auto; /* Center within the 850px container */
+            padding:8px;
+            display:grid;
+            gap:8px;
+            grid-template-columns:1fr
+        }
         .card{background:#fff;border:1px solid #eee;border-radius:12px;box-shadow:0 1px 4px rgba(0,0,0,.04);padding:6px 8px}
-        .title{font-weight:800;margin:2px 2px 4px;font-size:16px;line-height:1.25}
+        .title{font-weight:800;margin:2px 2px 4px;font-size:16px;line-height:1.25; color: var(--ink);}
         .subtitle{margin:-2px 2px 6px;color:#6b7280;font-size:9px}
         .assignment-3 svg{width:100%;height:auto;background:#fff}
         .axis text, text.axis{font-size:8px;fill:#374151}
