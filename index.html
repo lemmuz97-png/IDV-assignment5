@@ -1,0 +1,310 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>IDV — Combined Assignments</title>
+
+<!-- Unified style (inspired by your Assignment 4 design) -->
+<style>
+  :root{
+    --bg: #0f1724;          /* deep navy */
+    --card: #0f1724;        /* same as bg to start */
+    --muted: #94a3b8;       /* light slate */
+    --accent: #0fb8b3;      /* teal-like accent */
+    --accent-2: #6c5ce7;    /* indigo accent */
+    --surface: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    --radius: 14px;
+    --glass: rgba(255,255,255,0.02);
+    --max-width: 1200px;
+    --mono: "SFMono-Regular", ui-monospace, Menlo, Monaco, "Roboto Mono", monospace;
+    --ui-font: "Inter", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+
+  html,body{
+    height:100%;
+    margin:0;
+    font-family: var(--ui-font);
+    background: radial-gradient(1200px 600px at 10% 10%, rgba(108,92,231,0.06), transparent),
+                radial-gradient(900px 400px at 90% 90%, rgba(15,184,179,0.04), transparent),
+                var(--bg);
+    color: #e6eef6;
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+  }
+
+  .wrap{
+    display:flex;
+    gap:24px;
+    max-width: calc(var(--max-width) + 320px);
+    margin:36px auto;
+    padding:20px;
+    align-items:flex-start;
+  }
+
+  /* Left navigation */
+  nav.toc{
+    width:260px;
+    position:sticky;
+    top:28px;
+    height: calc(100vh - 56px);
+    padding:18px;
+    border-radius:12px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.02), transparent);
+    box-shadow: 0 8px 30px rgba(2,6,23,0.6);
+    border: 1px solid rgba(255,255,255,0.03);
+    overflow:auto;
+  }
+  nav.toc h2{
+    font-size:14px;
+    margin:0 0 12px 0;
+    color:var(--muted);
+    letter-spacing:0.06em;
+  }
+  nav.toc ul{ list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:8px;}
+  nav.toc a{
+    color: #d6e7ff;
+    text-decoration:none;
+    padding:8px 10px;
+    border-radius:8px;
+    display:block;
+    font-weight:600;
+    font-size:14px;
+    transition: all .12s ease;
+  }
+  nav.toc a:hover{ transform:translateX(6px); color:var(--accent); }
+
+  /* Main content area */
+  main.content{
+    flex:1;
+    min-width:0;
+    max-width: var(--max-width);
+  }
+
+  header.topbar{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    margin-bottom:18px;
+  }
+  header .title{
+    display:flex;
+    gap:12px;
+    align-items:center;
+  }
+  header h1{
+    margin:0;
+    font-size:22px;
+    letter-spacing: -0.01em;
+  }
+  header p.lead{
+    margin:0;
+    color:var(--muted);
+    font-size:13px;
+  }
+
+  /* Cards for each assignment */
+  section.assignment{
+    margin-bottom:18px;
+    border-radius: var(--radius);
+    padding:16px;
+    background: var(--surface);
+    border: 1px solid rgba(255,255,255,0.03);
+    box-shadow: 0 10px 30px rgba(2,6,23,0.55);
+    overflow:hidden;
+  }
+
+  .assignment .hdr{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:12px;
+    margin-bottom:12px;
+  }
+  .assignment h3{ margin:0; font-size:16px; }
+  .meta { color:var(--muted); font-size:13px; }
+
+  /* area where external content will be inserted */
+  .remote {
+    background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));
+    border-radius:8px;
+    padding:12px;
+    min-height:120px;
+  }
+
+  /* fallback iframe */
+  .fallback {
+    width:100%;
+    height:480px;
+    border:1px solid rgba(255,255,255,0.04);
+    border-radius:8px;
+  }
+
+  /* small utilities */
+  .btn{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:8px 12px;
+    border-radius:10px;
+    background:linear-gradient(90deg,var(--accent),var(--accent-2));
+    color:white;
+    font-weight:600;
+    border:none;
+    cursor:pointer;
+    box-shadow: 0 6px 18px rgba(12,18,35,0.5);
+  }
+
+  footer{
+    text-align:center;
+    color:var(--muted);
+    margin-top:18px;
+    font-size:13px;
+  }
+
+  /* responsive */
+  @media (max-width:980px){
+    .wrap{ flex-direction:column; padding:12px; }
+    nav.toc{ width:100%; order:2; height:auto; position:relative; top:auto;}
+  }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <nav class="toc" aria-label="Table of contents">
+      <h2>Assignments</h2>
+      <ul>
+        <li><a href="#a1">Assignment 1 — PSI Readings</a></li>
+        <li><a href="#a2">Assignment 2 — SVG Effects Gallery</a></li>
+        <li><a href="#a3">Assignment 3 — Interactive Charts</a></li>
+        <li><a href="#a4">Assignment 4 — Combined Data Viz</a></li>
+      </ul>
+
+      <hr style="margin:12px 0; border:none; height:1px; background: rgba(255,255,255,0.03)">
+
+      <p style="color:var(--muted); font-size:12px; margin:0">
+        This page fetches each assignment live from:
+        <br><code style="font-family:var(--mono); color:var(--muted)">https://lemmuz97-png.github.io/IDV-assignment*</code>
+      </p>
+    </nav>
+
+    <main class="content">
+      <header class="topbar">
+        <div class="title">
+          <div style="width:48px; height:48px; border-radius:12px; background:linear-gradient(135deg,var(--accent),var(--accent-2)); display:flex; align-items:center; justify-content:center; font-weight:800; color:white;">IDV</div>
+          <div>
+            <h1>Integrated IDV Assignments</h1>
+            <p class="lead">All four assignments presented in a single, consistent layout (style borrowed from Assignment 4).</p>
+          </div>
+        </div>
+
+        <div>
+          <button class="btn" id="refreshAll">Refresh & Load</button>
+        </div>
+      </header>
+
+      <!-- Assignment sections -->
+      <section id="a1" class="assignment">
+        <div class="hdr">
+          <h3>Assignment 1 — Singapore PSI Readings</h3>
+          <div class="meta">Source: <a href="https://lemmuz97-png.github.io/IDV-assignment1/" target="_blank" style="color:var(--accent)">IDV-assignment1</a></div>
+        </div>
+        <div class="remote" data-src="https://lemmuz97-png.github.io/IDV-assignment1/">Loading assignment 1…</div>
+      </section>
+
+      <section id="a2" class="assignment">
+        <div class="hdr">
+          <h3>Assignment 2 — SVG Effects Gallery</h3>
+          <div class="meta">Source: <a href="https://lemmuz97-png.github.io/IDV-assignment2/" target="_blank" style="color:var(--accent)">IDV-assignment2</a></div>
+        </div>
+        <div class="remote" data-src="https://lemmuz97-png.github.io/IDV-assignment2/">Loading assignment 2…</div>
+      </section>
+
+      <section id="a3" class="assignment">
+        <div class="hdr">
+          <h3>Assignment 3 — Interactive Charts</h3>
+          <div class="meta">Source: <a href="https://lemmuz97-png.github.io/IDV-assignment3/" target="_blank" style="color:var(--accent)">IDV-assignment3</a></div>
+        </div>
+        <div class="remote" data-src="https://lemmuz97-png.github.io/IDV-assignment3/">Loading assignment 3…</div>
+      </section>
+
+      <section id="a4" class="assignment">
+        <div class="hdr">
+          <h3>Assignment 4 — Combined Data Visualization</h3>
+          <div class="meta">Source: <a href="https://lemmuz97-png.github.io/IDV-assignment4/" target="_blank" style="color:var(--accent)">IDV-assignment4</a></div>
+        </div>
+        <div class="remote" data-src="https://lemmuz97-png.github.io/IDV-assignment4/">Loading assignment 4…</div>
+      </section>
+
+      <footer>
+        Built automatically from your four assignment pages. If a section looks broken, try clicking the source link to open the original assignment page directly.
+      </footer>
+    </main>
+  </div>
+
+<script>
+  // Utility: sanitize minimal HTML (basic - not a strict sanitizer). For strong security, run server-side sanitisation.
+  function extractBody(htmlText) {
+    // Try to find the <body> content; if not found, return whole doc
+    const bodyMatch = htmlText.match(/<body[^>]*>([\s\S]*?)<\/body>/i);
+    if (bodyMatch) return bodyMatch[1];
+    // If markdown-style content (GH Pages) may just be raw text — return the whole thing
+    return htmlText;
+  }
+
+  async function loadRemote(el) {
+    const src = el.dataset.src;
+    try {
+      const resp = await fetch(src, {mode: 'cors'});
+      if(!resp.ok) throw new Error('HTTP ' + resp.status);
+      const text = await resp.text();
+
+      // Insert extracted body/content
+      const content = extractBody(text);
+
+      // Small heuristic: remove top-level <script> tags to avoid collisions (but keep style tags)
+      const cleaned = content.replace(/<script[\s\S]*?<\/script>/gi, match => {
+        // keep scripts only if they are inline data-visualisation safe? For now remove to avoid execution conflicts.
+        return '<div class="removed-script">[script removed to avoid conflicts]</div>';
+      });
+
+      el.innerHTML = cleaned;
+
+      // If content is suspiciously blank, fallback to iframe
+      if (el.innerText.trim().length < 5) {
+        throw new Error('Empty or non-renderable content');
+      }
+
+    } catch(err) {
+      // Fallback: show the page in an iframe so original functionality remains.
+      el.innerHTML = '<div style="padding:12px;color:var(--muted);">Could not fetch content directly (' + (err.message||err) + '). Showing fallback iframe below.</div>' +
+                     '<iframe class="fallback" src="' + src + '"></iframe>';
+      console.warn('Failed to load', src, err);
+    }
+  }
+
+  async function loadAll() {
+    document.querySelectorAll('.remote').forEach(el => {
+      el.innerHTML = '<div style="color:var(--muted)">Loading…</div>';
+      loadRemote(el);
+    });
+  }
+
+  // Initial load
+  window.addEventListener('load', () => {
+    loadAll();
+    document.getElementById('refreshAll').addEventListener('click', loadAll);
+    // Smooth scroll for nav anchors
+    document.querySelectorAll('nav.toc a').forEach(a=>{
+      a.addEventListener('click', e=>{
+        e.preventDefault();
+        const id = a.getAttribute('href').slice(1);
+        const target = document.getElementById(id);
+        if (target) target.scrollIntoView({behavior:'smooth', block:'start'});
+      });
+    });
+  });
+</script>
+</body>
+</html>
