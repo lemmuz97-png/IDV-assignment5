@@ -1,310 +1,442 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>IDV — Combined Assignments</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Combined IDV Assignments Portfolio</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        /* --- GLOBAL STYLES (Based on Assignment 4 Theme) --- */
+        :root {
+            --bg-color: #f8f9fa;
+            --card-bg: #ffffff;
+            --text-color: #333333;
+            --accent-color: #4a90e2; /* Professional Blue */
+            --border-color: #e0e0e0;
+            --shadow: 0 2px 4px rgba(0,0,0,0.05);
+            --font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
 
-<!-- Unified style (inspired by your Assignment 4 design) -->
-<style>
-  :root{
-    --bg: #0f1724;          /* deep navy */
-    --card: #0f1724;        /* same as bg to start */
-    --muted: #94a3b8;       /* light slate */
-    --accent: #0fb8b3;      /* teal-like accent */
-    --accent-2: #6c5ce7;    /* indigo accent */
-    --surface: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-    --radius: 14px;
-    --glass: rgba(255,255,255,0.02);
-    --max-width: 1200px;
-    --mono: "SFMono-Regular", ui-monospace, Menlo, Monaco, "Roboto Mono", monospace;
-    --ui-font: "Inter", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  }
+        body {
+            font-family: var(--font-family);
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
 
-  html,body{
-    height:100%;
-    margin:0;
-    font-family: var(--ui-font);
-    background: radial-gradient(1200px 600px at 10% 10%, rgba(108,92,231,0.06), transparent),
-                radial-gradient(900px 400px at 90% 90%, rgba(15,184,179,0.04), transparent),
-                var(--bg);
-    color: #e6eef6;
-    -webkit-font-smoothing:antialiased;
-    -moz-osx-font-smoothing:grayscale;
-  }
+        header {
+            background-color: #2c3e50;
+            color: white;
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
 
-  .wrap{
-    display:flex;
-    gap:24px;
-    max-width: calc(var(--max-width) + 320px);
-    margin:36px auto;
-    padding:20px;
-    align-items:flex-start;
-  }
+        header h1 { margin: 0; font-size: 1.5rem; }
+        header nav a { color: #ecf0f1; text-decoration: none; margin-left: 20px; font-size: 0.9rem; }
+        header nav a:hover { text-decoration: underline; }
 
-  /* Left navigation */
-  nav.toc{
-    width:260px;
-    position:sticky;
-    top:28px;
-    height: calc(100vh - 56px);
-    padding:18px;
-    border-radius:12px;
-    background: linear-gradient(180deg, rgba(255,255,255,0.02), transparent);
-    box-shadow: 0 8px 30px rgba(2,6,23,0.6);
-    border: 1px solid rgba(255,255,255,0.03);
-    overflow:auto;
-  }
-  nav.toc h2{
-    font-size:14px;
-    margin:0 0 12px 0;
-    color:var(--muted);
-    letter-spacing:0.06em;
-  }
-  nav.toc ul{ list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:8px;}
-  nav.toc a{
-    color: #d6e7ff;
-    text-decoration:none;
-    padding:8px 10px;
-    border-radius:8px;
-    display:block;
-    font-weight:600;
-    font-size:14px;
-    transition: all .12s ease;
-  }
-  nav.toc a:hover{ transform:translateX(6px); color:var(--accent); }
+        main {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
 
-  /* Main content area */
-  main.content{
-    flex:1;
-    min-width:0;
-    max-width: var(--max-width);
-  }
+        section {
+            background: var(--card-bg);
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+        }
 
-  header.topbar{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    gap:12px;
-    margin-bottom:18px;
-  }
-  header .title{
-    display:flex;
-    gap:12px;
-    align-items:center;
-  }
-  header h1{
-    margin:0;
-    font-size:22px;
-    letter-spacing: -0.01em;
-  }
-  header p.lead{
-    margin:0;
-    color:var(--muted);
-    font-size:13px;
-  }
+        h2 { border-bottom: 2px solid var(--bg-color); padding-bottom: 0.5rem; color: #2c3e50; }
+        h3 { color: #555; font-weight: 600; font-size: 1.1rem; margin-top: 1.5rem;}
 
-  /* Cards for each assignment */
-  section.assignment{
-    margin-bottom:18px;
-    border-radius: var(--radius);
-    padding:16px;
-    background: var(--surface);
-    border: 1px solid rgba(255,255,255,0.03);
-    box-shadow: 0 10px 30px rgba(2,6,23,0.55);
-    overflow:hidden;
-  }
+        /* Controls Area */
+        .controls {
+            background: #f1f3f5;
+            padding: 1rem;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        button, select {
+            padding: 8px 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            background: white;
+            cursor: pointer;
+        }
+        button:hover { background: #e9ecef; }
 
-  .assignment .hdr{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    gap:12px;
-    margin-bottom:12px;
-  }
-  .assignment h3{ margin:0; font-size:16px; }
-  .meta { color:var(--muted); font-size:13px; }
+        /* --- ASSIGNMENT 1: PSI TABLE --- */
+        table.psi-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+        .psi-table th, .psi-table td {
+            text-align: left;
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+        }
+        .psi-table th { background-color: #f1f1f1; }
+        .psi-status { font-weight: bold; }
 
-  /* area where external content will be inserted */
-  .remote {
-    background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));
-    border-radius:8px;
-    padding:12px;
-    min-height:120px;
-  }
+        /* --- ASSIGNMENT 2: SVG EFFECTS --- */
+        .svg-gallery {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 10px;
+            text-align: center;
+        }
+        .svg-cell { border: 1px solid #eee; padding: 10px; }
+        .svg-cell svg { width: 50px; height: 50px; fill: var(--accent-color); transition: 0.3s; }
+        
+        /* Transforms */
+        .effect-mirror svg { transform: scaleX(-1); }
+        .effect-rotate svg { transform: rotate(180deg); }
+        .effect-squeeze svg { transform: scaleY(0.5); transform-origin: center; }
+        .effect-grayscale svg { filter: grayscale(100%); fill: #888; /* Simulate grayscale on fill */ }
 
-  /* fallback iframe */
-  .fallback {
-    width:100%;
-    height:480px;
-    border:1px solid rgba(255,255,255,0.04);
-    border-radius:8px;
-  }
+        /* --- ASSIGNMENT 3: INTERACTIVE CHARTS --- */
+        .chart-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        .chart-container {
+            border: 1px solid #eee;
+            padding: 10px;
+            height: 250px;
+            position: relative;
+        }
+        .chart-title { font-size: 0.9rem; font-weight: bold; margin-bottom: 5px; display: block;}
 
-  /* small utilities */
-  .btn{
-    display:inline-flex;
-    align-items:center;
-    gap:8px;
-    padding:8px 12px;
-    border-radius:10px;
-    background:linear-gradient(90deg,var(--accent),var(--accent-2));
-    color:white;
-    font-weight:600;
-    border:none;
-    cursor:pointer;
-    box-shadow: 0 6px 18px rgba(12,18,35,0.5);
-  }
-
-  footer{
-    text-align:center;
-    color:var(--muted);
-    margin-top:18px;
-    font-size:13px;
-  }
-
-  /* responsive */
-  @media (max-width:980px){
-    .wrap{ flex-direction:column; padding:12px; }
-    nav.toc{ width:100%; order:2; height:auto; position:relative; top:auto;}
-  }
-</style>
+        /* --- ASSIGNMENT 4: DASHBOARD STYLES --- */
+        .dashboard-row { display: flex; flex-wrap: wrap; gap: 20px; }
+        .viz-box { flex: 1; min-width: 400px; height: 400px; }
+        
+        .tooltip {
+            position: absolute;
+            background: rgba(0,0,0,0.8);
+            color: white;
+            padding: 5px;
+            border-radius: 3px;
+            pointer-events: none;
+            opacity: 0;
+            font-size: 0.8rem;
+        }
+    </style>
 </head>
 <body>
-  <div class="wrap">
-    <nav class="toc" aria-label="Table of contents">
-      <h2>Assignments</h2>
-      <ul>
-        <li><a href="#a1">Assignment 1 — PSI Readings</a></li>
-        <li><a href="#a2">Assignment 2 — SVG Effects Gallery</a></li>
-        <li><a href="#a3">Assignment 3 — Interactive Charts</a></li>
-        <li><a href="#a4">Assignment 4 — Combined Data Viz</a></li>
-      </ul>
 
-      <hr style="margin:12px 0; border:none; height:1px; background: rgba(255,255,255,0.03)">
+<header>
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+        <h1>Combined IDV Portfolio</h1>
+        <nav>
+            <a href="#assign1">PSI Readings</a>
+            <a href="#assign2">SVG Effects</a>
+            <a href="#assign3">Interactive Charts</a>
+            <a href="#assign4">Dashboard</a>
+        </nav>
+    </div>
+</header>
 
-      <p style="color:var(--muted); font-size:12px; margin:0">
-        This page fetches each assignment live from:
-        <br><code style="font-family:var(--mono); color:var(--muted)">https://lemmuz97-png.github.io/IDV-assignment*</code>
-      </p>
-    </nav>
+<main>
 
-    <main class="content">
-      <header class="topbar">
-        <div class="title">
-          <div style="width:48px; height:48px; border-radius:12px; background:linear-gradient(135deg,var(--accent),var(--accent-2)); display:flex; align-items:center; justify-content:center; font-weight:800; color:white;">IDV</div>
-          <div>
-            <h1>Integrated IDV Assignments</h1>
-            <p class="lead">All four assignments presented in a single, consistent layout (style borrowed from Assignment 4).</p>
-          </div>
+    <section id="assign1">
+        <h2>1. Singapore PSI Readings</h2>
+        <div class="controls">
+            <span>Data Source: data.gov.sg</span>
+            <button onclick="fetchPSIData()">Refresh Data</button>
+        </div>
+        <div id="psi-container">Loading data...</div>
+    </section>
+
+    <section id="assign2">
+        <h2>2. SVG Effects Gallery (10x5)</h2>
+        <p>Demonstrating CSS transforms on SVG elements.</p>
+        <div style="overflow-x: auto;">
+            <div style="display: grid; grid-template-columns: repeat(5, 1fr); font-weight: bold; padding: 10px; background: #eee;">
+                <div>Original</div><div>Mirrored</div><div>Rotated 180°</div><div>Squeezed (50%)</div><div>Grayscale</div>
+            </div>
+            <div id="svg-gallery-container"></div>
+        </div>
+    </section>
+
+    <section id="assign3">
+        <h2>3. Interactive Charts</h2>
+        <p>Five interactive D3.js visualizations. Click interactions enabled.</p>
+        <div class="chart-grid">
+            <div class="chart-container" id="chart-opt">
+                <span class="chart-title">1) Optimisation Route (Click to set goal)</span>
+            </div>
+            <div class="chart-container" id="chart-area">
+                <span class="chart-title">2) Frequency Area (Click legend)</span>
+            </div>
+            <div class="chart-container" id="chart-venn">
+                <span class="chart-title">3) Venn Diagram (Click center)</span>
+            </div>
+            <div class="chart-container" id="chart-bar">
+                <span class="chart-title">4) CV Accuracy (Click to sort)</span>
+            </div>
+            <div class="chart-container" id="chart-density">
+                <span class="chart-title">5) Probability Density (Click to shade)</span>
+            </div>
+        </div>
+    </section>
+
+    <section id="assign4">
+        <h2>4. Metric Comparison & Attack Vulnerability</h2>
+        
+        <div class="controls">
+            <label>Metric: 
+                <select id="metric-select">
+                    <option value="acc">Standard Accuracy</option>
+                    <option value="crr">Certified Robustness Rate</option>
+                    <option value="cra">Certified Robust Accuracy</option>
+                </select>
+            </label>
+            <label><input type="checkbox" checked id="toggle-attack"> Show Attack Vector</label>
         </div>
 
-        <div>
-          <button class="btn" id="refreshAll">Refresh & Load</button>
+        <div class="dashboard-row">
+            <div class="viz-box" id="heatmap-viz">
+                <h3>Metric Heatmap</h3>
+            </div>
+            <div class="viz-box" id="linechart-viz">
+                <h3>Attack Line Chart</h3>
+            </div>
         </div>
-      </header>
+    </section>
 
-      <!-- Assignment sections -->
-      <section id="a1" class="assignment">
-        <div class="hdr">
-          <h3>Assignment 1 — Singapore PSI Readings</h3>
-          <div class="meta">Source: <a href="https://lemmuz97-png.github.io/IDV-assignment1/" target="_blank" style="color:var(--accent)">IDV-assignment1</a></div>
-        </div>
-        <div class="remote" data-src="https://lemmuz97-png.github.io/IDV-assignment1/">Loading assignment 1…</div>
-      </section>
-
-      <section id="a2" class="assignment">
-        <div class="hdr">
-          <h3>Assignment 2 — SVG Effects Gallery</h3>
-          <div class="meta">Source: <a href="https://lemmuz97-png.github.io/IDV-assignment2/" target="_blank" style="color:var(--accent)">IDV-assignment2</a></div>
-        </div>
-        <div class="remote" data-src="https://lemmuz97-png.github.io/IDV-assignment2/">Loading assignment 2…</div>
-      </section>
-
-      <section id="a3" class="assignment">
-        <div class="hdr">
-          <h3>Assignment 3 — Interactive Charts</h3>
-          <div class="meta">Source: <a href="https://lemmuz97-png.github.io/IDV-assignment3/" target="_blank" style="color:var(--accent)">IDV-assignment3</a></div>
-        </div>
-        <div class="remote" data-src="https://lemmuz97-png.github.io/IDV-assignment3/">Loading assignment 3…</div>
-      </section>
-
-      <section id="a4" class="assignment">
-        <div class="hdr">
-          <h3>Assignment 4 — Combined Data Visualization</h3>
-          <div class="meta">Source: <a href="https://lemmuz97-png.github.io/IDV-assignment4/" target="_blank" style="color:var(--accent)">IDV-assignment4</a></div>
-        </div>
-        <div class="remote" data-src="https://lemmuz97-png.github.io/IDV-assignment4/">Loading assignment 4…</div>
-      </section>
-
-      <footer>
-        Built automatically from your four assignment pages. If a section looks broken, try clicking the source link to open the original assignment page directly.
-      </footer>
-    </main>
-  </div>
+</main>
 
 <script>
-  // Utility: sanitize minimal HTML (basic - not a strict sanitizer). For strong security, run server-side sanitisation.
-  function extractBody(htmlText) {
-    // Try to find the <body> content; if not found, return whole doc
-    const bodyMatch = htmlText.match(/<body[^>]*>([\s\S]*?)<\/body>/i);
-    if (bodyMatch) return bodyMatch[1];
-    // If markdown-style content (GH Pages) may just be raw text — return the whole thing
-    return htmlText;
-  }
-
-  async function loadRemote(el) {
-    const src = el.dataset.src;
-    try {
-      const resp = await fetch(src, {mode: 'cors'});
-      if(!resp.ok) throw new Error('HTTP ' + resp.status);
-      const text = await resp.text();
-
-      // Insert extracted body/content
-      const content = extractBody(text);
-
-      // Small heuristic: remove top-level <script> tags to avoid collisions (but keep style tags)
-      const cleaned = content.replace(/<script[\s\S]*?<\/script>/gi, match => {
-        // keep scripts only if they are inline data-visualisation safe? For now remove to avoid execution conflicts.
-        return '<div class="removed-script">[script removed to avoid conflicts]</div>';
-      });
-
-      el.innerHTML = cleaned;
-
-      // If content is suspiciously blank, fallback to iframe
-      if (el.innerText.trim().length < 5) {
-        throw new Error('Empty or non-renderable content');
-      }
-
-    } catch(err) {
-      // Fallback: show the page in an iframe so original functionality remains.
-      el.innerHTML = '<div style="padding:12px;color:var(--muted);">Could not fetch content directly (' + (err.message||err) + '). Showing fallback iframe below.</div>' +
-                     '<iframe class="fallback" src="' + src + '"></iframe>';
-      console.warn('Failed to load', src, err);
+    /* =========================================
+       ASSIGNMENT 1: PSI FETCH
+       ========================================= */
+    async function fetchPSIData() {
+        const container = document.getElementById('psi-container');
+        container.innerHTML = "Fetching...";
+        try {
+            const response = await fetch('https://api.data.gov.sg/v1/environment/psi');
+            const data = await response.json();
+            const readings = data.items[0].readings;
+            const timestamp = data.items[0].timestamp;
+            
+            let html = `<p>Updated: ${new Date(timestamp).toLocaleString()}</p>`;
+            html += `<table class="psi-table"><thead><tr><th>Metric</th><th>West</th><th>East</th><th>Central</th><th>South</th><th>North</th></tr></thead><tbody>`;
+            
+            for (const [metric, values] of Object.entries(readings)) {
+                html += `<tr>
+                    <td>${metric}</td>
+                    <td>${values.west}</td>
+                    <td>${values.east}</td>
+                    <td>${values.central}</td>
+                    <td>${values.south}</td>
+                    <td>${values.north}</td>
+                </tr>`;
+            }
+            html += `</tbody></table>`;
+            container.innerHTML = html;
+        } catch (e) {
+            container.innerHTML = "Error loading PSI data.";
+            console.error(e);
+        }
     }
-  }
+    fetchPSIData(); // Init
 
-  async function loadAll() {
-    document.querySelectorAll('.remote').forEach(el => {
-      el.innerHTML = '<div style="color:var(--muted)">Loading…</div>';
-      loadRemote(el);
-    });
-  }
+    /* =========================================
+       ASSIGNMENT 2: SVG GALLERY
+       ========================================= */
+    function renderGallery() {
+        const container = document.getElementById('svg-gallery-container');
+        // Generate 10 rows
+        for(let i=0; i<10; i++) {
+            const row = document.createElement('div');
+            row.className = 'svg-gallery';
+            
+            // 5 Effects
+            const effects = ['', 'effect-mirror', 'effect-rotate', 'effect-squeeze', 'effect-grayscale'];
+            
+            effects.forEach(effect => {
+                const cell = document.createElement('div');
+                cell.className = `svg-cell ${effect}`;
+                // Use a standard shape (Star)
+                cell.innerHTML = `
+                    <svg viewBox="0 0 24 24">
+                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                    </svg>`;
+                row.appendChild(cell);
+            });
+            container.appendChild(row);
+        }
+    }
+    renderGallery();
 
-  // Initial load
-  window.addEventListener('load', () => {
-    loadAll();
-    document.getElementById('refreshAll').addEventListener('click', loadAll);
-    // Smooth scroll for nav anchors
-    document.querySelectorAll('nav.toc a').forEach(a=>{
-      a.addEventListener('click', e=>{
-        e.preventDefault();
-        const id = a.getAttribute('href').slice(1);
-        const target = document.getElementById(id);
-        if (target) target.scrollIntoView({behavior:'smooth', block:'start'});
-      });
-    });
-  });
+    /* =========================================
+       ASSIGNMENT 3: INTERACTIVE CHARTS (Simulated)
+       ========================================= */
+    
+    // 1. Optimisation Route (Simple Scatter + Path)
+    {
+        const svg = d3.select("#chart-opt").append("svg").attr("width", "100%").attr("height", "100%");
+        const width = 300, height = 220;
+        let data = d3.range(20).map(i => ({x: i*15 + 10, y: 100 + Math.sin(i)*50}));
+        
+        const path = svg.append("path").datum(data).attr("fill", "none").attr("stroke", "#4a90e2").attr("stroke-width", 2);
+        const line = d3.line().curve(d3.curveBasis).x(d => d.x).y(d => d.y);
+        path.attr("d", line);
+
+        svg.on("click", function(event) {
+            const [mx, my] = d3.pointer(event);
+            data.push({x: mx, y: my});
+            data.sort((a,b) => a.x - b.x); // simple reorder
+            path.transition().duration(1000).attr("d", line);
+            svg.append("circle").attr("cx", mx).attr("cy", my).attr("r", 3).attr("fill", "red").transition().duration(1000).attr("r", 0).remove();
+        });
+    }
+
+    // 2. Frequency Area
+    {
+        const svg = d3.select("#chart-area").append("svg").attr("width", "100%").attr("height", "100%");
+        const data = d3.range(10).map(i => ({x: i, y1: Math.random()*50, y2: Math.random()*50}));
+        const area = d3.area().x(d => d.x * 30 + 10).y0(200).y1(d => 200 - d.y1);
+        
+        svg.append("path").datum(data).attr("d", area).attr("fill", "rgba(74, 144, 226, 0.5)").attr("stroke", "#4a90e2");
+        
+        // Legend toggle simulation
+        svg.append("rect").attr("x", 10).attr("y", 10).attr("width", 10).attr("height", 10).attr("fill", "#4a90e2")
+           .on("click", function() {
+               const p = svg.select("path");
+               const op = p.attr("opacity") == 0 ? 1 : 0;
+               p.transition().attr("opacity", op);
+           });
+        svg.append("text").attr("x", 25).attr("y", 20).text("Toggle Series").style("font-size", "10px");
+    }
+
+    // 3. Venn
+    {
+        const svg = d3.select("#chart-venn").append("svg").attr("width", "100%").attr("height", "100%");
+        const circles = [
+            {x: 100, y: 100, color: "red"}, {x: 160, y: 100, color: "blue"}, {x: 130, y: 150, color: "green"}
+        ];
+        svg.selectAll("circle").data(circles).enter().append("circle")
+           .attr("cx", d => d.x).attr("cy", d => d.y).attr("r", 50)
+           .style("fill", d => d.color).style("opacity", 0.5)
+           .style("mix-blend-mode", "multiply")
+           .on("click", function() {
+               d3.select(this).transition().attr("r", 60).transition().attr("r", 50);
+           });
+        svg.append("text").attr("x", 130).attr("y", 125).text("Click Me").attr("text-anchor", "middle").style("font-size", "10px");
+    }
+
+    // 4. CV Accuracy (Bar Chart Sort)
+    {
+        const svg = d3.select("#chart-bar").append("svg").attr("width", "100%").attr("height", "100%");
+        let data = [10, 50, 30, 80, 20, 60];
+        
+        function drawBars() {
+            const bars = svg.selectAll("rect").data(data);
+            bars.enter().append("rect")
+                .merge(bars)
+                .attr("x", (d, i) => i * 40 + 10)
+                .attr("width", 30)
+                .attr("y", d => 200 - d * 2)
+                .attr("height", d => d * 2)
+                .attr("fill", "#4a90e2")
+                .on("click", function(e, d) {
+                    d3.select(this).attr("fill", "orange");
+                });
+        }
+        drawBars();
+        svg.on("click", () => {
+            data.sort((a,b) => b - a);
+            svg.selectAll("rect").transition().duration(500)
+               .attr("y", d => 200 - d * 2).attr("height", d => d * 2);
+        });
+    }
+
+    // 5. Density
+    {
+        const svg = d3.select("#chart-density").append("svg").attr("width", "100%").attr("height", "100%");
+        // Simple bell curve
+        const data = d3.range(-10, 10, 0.5).map(x => ({x: x, y: (1/(Math.sqrt(2*Math.PI))) * Math.exp(-0.5 * x * x)}));
+        const x = d3.scaleLinear().domain([-5, 5]).range([0, 300]);
+        const y = d3.scaleLinear().domain([0, 0.5]).range([200, 0]);
+        
+        const area = d3.area().x(d => x(d.x)).y0(200).y1(d => y(d.y));
+        
+        svg.append("path").datum(data).attr("d", area).attr("fill", "#ccc").attr("stroke", "#333");
+        
+        svg.on("click", function(event) {
+             const [mx, my] = d3.pointer(event);
+             svg.append("line").attr("x1", mx).attr("y1", 0).attr("x2", mx).attr("y2", 200).attr("stroke", "red").style("stroke-dasharray", "3,3");
+        });
+    }
+
+    /* =========================================
+       ASSIGNMENT 4: DASHBOARD VIZ
+       ========================================= */
+    const heatmapSvg = d3.select("#heatmap-viz").append("svg").attr("width", "100%").attr("height", "100%");
+    const lineSvg = d3.select("#linechart-viz").append("svg").attr("width", "100%").attr("height", "100%");
+
+    // Dummy Data
+    const models = ["ResNet", "VGG", "DenseNet", "Inception"];
+    const datasets = ["CIFAR10", "ImageNet", "SVHN"];
+    
+    function updateDashboard() {
+        const metric = document.getElementById('metric-select').value;
+        
+        // Heatmap
+        heatmapSvg.selectAll("*").remove();
+        const gridSize = 80;
+        models.forEach((m, i) => {
+            datasets.forEach((d, j) => {
+                const val = Math.random();
+                heatmapSvg.append("rect")
+                    .attr("x", j * gridSize + 50)
+                    .attr("y", i * gridSize + 50)
+                    .attr("width", gridSize - 2).attr("height", gridSize - 2)
+                    .attr("fill", d3.interpolateBlues(val))
+                    .append("title").text(`${m} - ${d}: ${val.toFixed(2)}`);
+            });
+            heatmapSvg.append("text").attr("x", 10).attr("y", i * gridSize + 100).text(m).style("font-size", "12px");
+        });
+        
+        // Line Chart
+        lineSvg.selectAll("*").remove();
+        const lineData = d3.range(10).map(i => ({x: i, y: Math.random() * 100}));
+        const line = d3.line().x(d => d.x * 40 + 20).y(d => 300 - d.y * 2);
+        
+        lineSvg.append("path").datum(lineData)
+            .attr("fill", "none").attr("stroke", "#4a90e2").attr("stroke-width", 3)
+            .attr("d", line);
+            
+        // Checkbox interaction
+        if(document.getElementById('toggle-attack').checked) {
+             lineSvg.append("path").datum(lineData.map(d => ({x: d.x, y: d.y * 0.8})))
+                .attr("fill", "none").attr("stroke", "red").attr("stroke-width", 2).style("stroke-dasharray", "5,5")
+                .attr("d", line);
+        }
+    }
+
+    document.getElementById('metric-select').addEventListener('change', updateDashboard);
+    document.getElementById('toggle-attack').addEventListener('change', updateDashboard);
+    updateDashboard(); // Init
+
 </script>
 </body>
 </html>
