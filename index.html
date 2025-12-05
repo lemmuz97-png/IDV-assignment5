@@ -13,7 +13,7 @@
             theme: {
                 extend: {
                     colors: {
-                        'primary-accent': '#4f46e5',
+                        'primary-accent': '#6b7280',
                         'tab-inactive': '#9ca3af',
                         'light-bg': '#f7f9fb', 
                     },
@@ -105,11 +105,11 @@
        
         #content-consolidated h1 { 
             font-size: 24px; font-weight: 700; margin-bottom: 1rem; display: block; 
-            text-align: left !important; 
-            padding-bottom: 5px !important; 
-            border-bottom: 2px solid black !important;
-            margin-top: 3rem !important; 
-            margin-bottom: 1.5rem !important;
+            text-align: left; 
+            padding-bottom: 5px; 
+            border-bottom: 2px solid black;
+            margin-top: 3rem; 
+            margin-bottom: 1.5rem;
         }
        
        
@@ -204,7 +204,7 @@
             <section>
                 <h2 class="section-header-2">Assignment 2: SVG Effects</h2>
                 <div class="content-container text-center gallery-wrapper">
-                    <p class="text-sm text-gray-500 mb-4">Requires <code>svgs/svg1.svg</code> ... <code>svg10.svg</code></p>
+                    
                     <div style="overflow-x: auto;">
                         <table class="gallery" id="gallery">
                             <thead>
@@ -224,7 +224,6 @@
                 <h2 class="section-header-2">Assignment 3: Interactive Charts (Original Proportions)</h2>
                
                 <div class="a3-chart-wrapper"> 
-                    <p class="text-center text-sm text-gray-500 mb-4">Charts are displayed at their original, smaller proportions (max 520px) and centered.</p>
                    
                     <div class="a3-card">
                         <div class="a3-title">1) Optimisation Route</div>
@@ -301,7 +300,7 @@
     </div> 
    
     <script>
-        // --- Shared Helper for A3 SVGs ---
+        
         function svgEl(tag, attrs={}, children=[]){
             const el = document.createElementNS("http://www.w3.org/2000/svg", tag);
             for(const k in attrs){ el.setAttribute(k, attrs[k]); }
@@ -340,7 +339,7 @@
 
         
         function initAllScripts() {
-            // --- A1: PSI ---
+           
             (async function() {
                 try {
                     const res = await fetch("https://api.data.gov.sg/v1/environment/psi");
@@ -506,7 +505,7 @@
                     });
                 } drawAreas();
 
-                // legend toggle
+               
                 const legend = svgEl("g",{}); svg.appendChild(legend);
                 series.forEach((s,i)=>{
                     const gx = 74 + i*118, gy = 10;
@@ -541,7 +540,7 @@
                 });
             })();
 
-            /* ---------- 3: Venn ---------- */
+    
             (function(){
                 const svg = document.getElementById("c3"); if(!svg) return;
                 svg.innerHTML = '';
@@ -737,7 +736,7 @@
         }
 
 
-        // Data for A4 (moved here to ensure global access for A4 scripts)
+        
         const rawData1 = [{"Approach":"ERM","Metric Group":"Std Acc","Dataset":"CIFAR100","Value":81.03},{"Approach":"DA","Metric Group":"Std Acc","Dataset":"CIFAR100","Value":78.27},{"Approach":"PGDT","Metric Group":"Std Acc","Dataset":"CIFAR100","Value":64.35},{"Approach":"TRADES","Metric Group":"Std Acc","Dataset":"CIFAR100","Value":62.55},{"Approach":"MART","Metric Group":"Std Acc","Dataset":"CIFAR100","Value":63.68},{"Approach":"RS","Metric Group":"Std Acc","Dataset":"CIFAR100","Value":56.87},{"Approach":"IBP","Metric Group":"Std Acc","Dataset":"CIFAR100","Value":39.45},{"Approach":"PRL","Metric Group":"Std Acc","Dataset":"CIFAR100","Value":64.89},{"Approach":"TandT","Metric Group":"Std Acc","Dataset":"CIFAR100","Value":65.56},{"Approach":"ERM","Metric Group":"Std Acc","Dataset":"CIFAR10","Value":94.85},{"Approach":"DA","Metric Group":"Std Acc","Dataset":"CIFAR10","Value":94.21},{"Approach":"PGDT","Metric Group":"Std Acc","Dataset":"CIFAR10","Value":84.38},{"Approach":"TRADES","Metric Group":"Std Acc","Dataset":"CIFAR10","Value":80.42},{"Approach":"MART","Metric Group":"Std Acc","Dataset":"CIFAR10","Value":81.54},{"Approach":"RS","Metric Group":"Std Acc","Dataset":"CIFAR10","Value":89.45},{"Approach":"IBP","Metric Group":"Std Acc","Dataset":"CIFAR10","Value":48.4},{"Approach":"PRL","Metric Group":"Std Acc","Dataset":"CIFAR10","Value":93.82},{"Approach":"TandT","Metric Group":"Std Acc","Dataset":"CIFAR10","Value":94.23},{"Approach":"ERM","Metric Group":"Std Acc","Dataset":"SVHN","Value":94.44},{"Approach":"DA","Metric Group":"Std Acc","Dataset":"SVHN","Value":94.69},{"Approach":"PGDT","Metric Group":"Std Acc","Dataset":"SVHN","Value":91.19},{"Approach":"TRADES","Metric Group":"Std Acc","Dataset":"SVHN","Value":86.16},{"Approach":"MART","Metric Group":"Std Acc","Dataset":"SVHN","Value":90.2},{"Approach":"RS","Metric Group":"Std Acc","Dataset":"SVHN","Value":88.35},{"Approach":"IBP","Metric Group":"Std Acc","Dataset":"SVHN","Value":73.09},{"Approach":"PRL","Metric Group":"Std Acc","Dataset":"SVHN","Value":92},{"Approach":"TandT","Metric Group":"Std Acc","Dataset":"SVHN","Value":94.79},{"Approach":"ERM","Metric Group":"Std Acc","Dataset":"MNIST","Value":99.37},{"Approach":"DA","Metric Group":"Std Acc","Dataset":"MNIST","Value":99.42},{"Approach":"PGDT","Metric Group":"Std Acc","Dataset":"MNIST","Value":99.16},{"Approach":"TRADES","Metric Group":"Std Acc","Dataset":"MNIST","Value":99.1},{"Approach":"MART","Metric Group":"Std Acc","Dataset":"MNIST","Value":98.94},{"Approach":"RS","Metric Group":"Std Acc","Dataset":"MNIST","Value":97.16},{"Approach":"IBP","Metric Group":"Std Acc","Dataset":"MNIST","Value":97.78},{"Approach":"PRL","Metric Group":"Std Acc","Dataset":"MNIST","Value":99.32},{"Approach":"TandT","Metric Group":"Std Acc","Dataset":"MNIST","Value":99.32},{"Approach":"ERM","Metric Group":"CRR","Dataset":"CIFAR100","Value":9.28},{"Approach":"DA","Metric Group":"CRR","Dataset":"CIFAR100","Value":15.04},{"Approach":"PGDT","Metric Group":"CRR","Dataset":"CIFAR100","Value":57.07},{"Approach":"TRADES","Metric Group":"CRR","Dataset":"CIFAR100","Value":59.27},{"Approach":"MART","Metric Group":"CRR","Dataset":"CIFAR100","Value":58.79},{"Approach":"RS","Metric Group":"CRR","Dataset":"CIFAR100","Value":60.38},{"Approach":"IBP","Metric Group":"CRR","Dataset":"CIFAR100","Value":49.34},{"Approach":"PRL","Metric Group":"CRR","Dataset":"CIFAR100","Value":56.71},{"Approach":"TandT","Metric Group":"CRR","Dataset":"CIFAR100","Value":62.05},{"Approach":"ERM","Metric Group":"CRR","Dataset":"CIFAR10","Value":1.25},{"Approach":"DA","Metric Group":"CRR","Dataset":"CIFAR10","Value":81.08},{"Approach":"PGDT","Metric Group":"CRR","Dataset":"CIFAR10","Value":87.07},{"Approach":"TRADES","Metric Group":"CRR","Dataset":"CIFAR10","Value":88.54},{"Approach":"MART","Metric Group":"CRR","Dataset":"CIFAR10","Value":78.9},{"Approach":"RS","Metric Group":"CRR","Dataset":"CIFAR10","Value":90},{"Approach":"IBP","Metric Group":"CRR","Dataset":"CIFAR10","Value":54.7},{"Approach":"PRL","Metric Group":"CRR","Dataset":"CIFAR10","Value":90.71},{"Approach":"TandT","Metric Group":"CRR","Dataset":"CIFAR10","Value":95.08},{"Approach":"ERM","Metric Group":"CRR","Dataset":"SVHN","Value":52.72},{"Approach":"DA","Metric Group":"CRR","Dataset":"SVHN","Value":82.08},{"Approach":"PGDT","Metric Group":"CRR","Dataset":"SVHN","Value":87.89},{"Approach":"TRADES","Metric Group":"CRR","Dataset":"SVHN","Value":87.89},{"Approach":"MART","Metric Group":"CRR","Dataset":"SVHN","Value":85.23},{"Approach":"RS","Metric Group":"CRR","Dataset":"SVHN","Value":76.29},{"Approach":"IBP","Metric Group":"CRR","Dataset":"SVHN","Value":61.94},{"Approach":"PRL","Metric Group":"CRR","Dataset":"SVHN","Value":93.11},{"Approach":"TandT","Metric Group":"CRR","Dataset":"SVHN","Value":93.15},{"Approach":"ERM","Metric Group":"CRR","Dataset":"MNIST","Value":26.01},{"Approach":"DA","Metric Group":"CRR","Dataset":"MNIST","Value":85.23},{"Approach":"PGDT","Metric Group":"CRR","Dataset":"MNIST","Value":94.65},{"Approach":"TRADES","Metric Group":"CRR","Dataset":"MNIST","Value":94.76},{"Approach":"MART","Metric Group":"CRR","Dataset":"MNIST","Value":94.13},{"Approach":"RS","Metric Group":"CRR","Dataset":"MNIST","Value":87.15},{"Approach":"IBP","Metric Group":"CRR","Dataset":"MNIST","Value":89.18},{"Approach":"PRL","Metric Group":"CRR","Dataset":"MNIST","Value":96.03},{"Approach":"TandT","Metric Group":"CRR","Dataset":"MNIST","Value":97.8},{"Approach":"ERM","Metric Group":"CRA","Dataset":"CIFAR100","Value":4.52},{"Approach":"DA","Metric Group":"CRA","Dataset":"CIFAR100","Value":6.15},{"Approach":"PGDT","Metric Group":"CRA","Dataset":"CIFAR100","Value":32.93},{"Approach":"TRADES","Metric Group":"CRA","Dataset":"CIFAR100","Value":38.85},{"Approach":"MART","Metric Group":"CRA","Dataset":"CIFAR100","Value":49.37},{"Approach":"RS","Metric Group":"CRA","Dataset":"CIFAR100","Value":47.5},{"Approach":"IBP","Metric Group":"CRA","Dataset":"CIFAR100","Value":29.2},{"Approach":"PRL","Metric Group":"CRA","Dataset":"CIFAR100","Value":50.77},{"Approach":"TandT","Metric Group":"CRA","Dataset":"CIFAR100","Value":52.07},{"Approach":"ERM","Metric Group":"CRA","Dataset":"CIFAR10","Value":1.25},{"Approach":"DA","Metric Group":"CRA","Dataset":"CIFAR10","Value":76.07},{"Approach":"PGDT","Metric Group":"CRA","Dataset":"CIFAR10","Value":82.9},{"Approach":"TRADES","Metric Group":"CRA","Dataset":"CIFAR10","Value":78.8},{"Approach":"MART","Metric Group":"CRA","Dataset":"CIFAR10","Value":72.21},{"Approach":"RS","Metric Group":"CRA","Dataset":"CIFAR10","Value":87.98},{"Approach":"IBP","Metric Group":"CRA","Dataset":"CIFAR10","Value":40},{"Approach":"PRL","Metric Group":"CRA","Dataset":"CIFAR10","Value":90.63},{"Approach":"TandT","Metric Group":"CRA","Dataset":"CIFAR10","Value":91.75},{"Approach":"ERM","Metric Group":"CRA","Dataset":"SVHN","Value":51.04},{"Approach":"DA","Metric Group":"CRA","Dataset":"SVHN","Value":82.01},{"Approach":"PGDT","Metric Group":"CRA","Dataset":"SVHN","Value":86.68},{"Approach":"TRADES","Metric Group":"CRA","Dataset":"SVHN","Value":84.76},{"Approach":"MART","Metric Group":"CRA","Dataset":"SVHN","Value":78.82},{"Approach":"RS","Metric Group":"CRA","Dataset":"SVHN","Value":70.64},{"Approach":"IBP","Metric Group":"CRA","Dataset":"SVHN","Value":57.26},{"Approach":"PRL","Metric Group":"CRA","Dataset":"SVHN","Value":91.07},{"Approach":"TandT","Metric Group":"CRA","Dataset":"SVHN","Value":92.81},{"Approach":"ERM","Metric Group":"CRA","Dataset":"MNIST","Value":24.96},{"Approach":"DA","Metric Group":"CRA","Dataset":"MNIST","Value":84.12},{"Approach":"PGDT","Metric Group":"CRA","Dataset":"MNIST","Value":94.63},{"Approach":"TRADES","Metric Group":"CRA","Dataset":"MNIST","Value":94.61},{"Approach":"MART","Metric Group":"CRA","Dataset":"MNIST","Value":94.09},{"Approach":"RS","Metric Group":"CRA","Dataset":"MNIST","Value":86.29},{"Approach":"IBP","Metric Group":"CRA","Dataset":"MNIST","Value":88.51},{"Approach":"PRL","Metric Group":"CRA","Dataset":"MNIST","Value":95.01},{"Approach":"TandT","Metric Group":"CRA","Dataset":"MNIST","Value":96.8}];
         const rawData2 = [{"Attack":"No Attack","ERM":94.85,"DA":94.21,"PGDT":84.38,"TRADES":80.42,"MART":81.54,"RS":89.45,"IBP":48.4,"PRL":93.82,"TandT":94.23},{"Attack":"TIFGSM","ERM":35.1,"DA":33,"PGDT":65.7,"TRADES":62.9,"MART":69.1,"RS":45.4,"IBP":40.2,"PRL":34,"TandT":92.8},{"Attack":"MIFGSM","ERM":0,"DA":0,"PGDT":50.9,"TRADES":51.9,"MART":50.5,"RS":5.8,"IBP":38.1,"PRL":0,"TandT":92.8},{"Attack":"DIFGSM","ERM":1,"DA":0,"PGDT":51.75,"TRADES":50.5,"MART":53.6,"RS":4.1,"IBP":38.1,"PRL":3.1,"TandT":92.8},{"Attack":"VMIFGSM","ERM":0,"DA":0,"PGDT":51.1,"TRADES":50.9,"MART":51.9,"RS":4.1,"IBP":38.1,"PRL":0,"TandT":93.9},{"Attack":"TPGD","ERM":38.1,"DA":39.2,"PGDT":69.3,"TRADES":69.1,"MART":70.1,"RS":48.5,"IBP":50,"PRL":28.9,"TandT":91.8},{"Attack":"FGSM","ERM":29.9,"DA":25.8,"PGDT":57.95,"TRADES":54.6,"MART":61.9,"RS":28.9,"IBP":38.1,"PRL":25.8,"TandT":93.8},{"Attack":"RFGSM","ERM":0,"DA":0,"PGDT":49.15,"TRADES":50.4,"MART":48.5,"RS":3.7,"IBP":38.1,"PRL":0,"TandT":90},{"Attack":"BIM","ERM":0,"DA":0,"PGDT":52,"TRADES":57.2,"MART":47.4,"RS":2.1,"IBP":38.1,"PRL":0,"TandT":90.7},{"Attack":"FAB","ERM":1,"DA":2.1,"PGDT":43,"TRADES":46.4,"MART":40.2,"RS":5.3,"IBP":38.1,"PRL":4.1,"TandT":90.1},{"Attack":"CW","ERM":0,"DA":0,"PGDT":32.2,"TRADES":35.1,"MART":29.9,"RS":1,"IBP":40.2,"PRL":1,"TandT":92.9},{"Attack":"UPGD","ERM":0,"DA":0,"PGDT":49.85,"TRADES":50.5,"MART":49.8,"RS":5.1,"IBP":38.1,"PRL":0,"TandT":93.8},{"Attack":"FFGSM","ERM":19.6,"DA":23.7,"PGDT":60.55,"TRADES":55.7,"MART":66,"RS":33,"IBP":42.3,"PRL":29.9,"TandT":92.8},{"Attack":"Jitter","ERM":11.3,"DA":12.4,"PGDT":48.15,"TRADES":47.4,"MART":49.5,"RS":34,"IBP":39.2,"PRL":24.7,"TandT":90.7},{"Attack":"PGD","ERM":0,"DA":0,"PGDT":57.4,"TRADES":54.6,"MART":60.8,"RS":7.2,"IBP":40.2,"PRL":0,"TandT":91.8},{"Attack":"EOTPGD","ERM":0,"DA":0,"PGDT":50.1,"TRADES":50.3,"MART":50.5,"RS":3,"IBP":38.1,"PRL":0,"TandT":90.7},{"Attack":"APGD","ERM":0,"DA":0,"PGDT":48.4,"TRADES":51,"MART":46.4,"RS":1,"IBP":38.1,"PRL":0,"TandT":90.7},{"Attack":"NIFGSM","ERM":0,"DA":0,"PGDT":57.95,"TRADES":56.7,"MART":59.8,"RS":7.2,"IBP":38.1,"PRL":1,"TandT":92.8},{"Attack":"SiniFGSM","ERM":4.1,"DA":1,"PGDT":59,"TRADES":56.7,"MART":61.9,"RS":23.7,"IBP":38.1,"PRL":12.4,"TandT":93.7},{"Attack":"VNIFGSM","ERM":0,"DA":0,"PGDT":50.45,"TRADES":53,"MART":48.5,"RS":5.1,"IBP":38.1,"PRL":0,"TandT":92.9},{"Attack":"APGDT","ERM":0,"DA":0,"PGDT":40.9,"TRADES":44.3,"MART":38.1,"RS":0,"IBP":38.1,"PRL":0,"TandT":88.7},{"Attack":"Square","ERM":0,"DA":1,"PGDT":50.4,"TRADES":54,"MART":47.4,"RS":3.1,"IBP":38.1,"PRL":2.1,"TandT":88.08},{"Attack":"Add Gaussian Noise","ERM":25.8,"DA":43.3,"PGDT":79.1,"TRADES":78.4,"MART":80.4,"RS":74.2,"IBP":42.3,"PRL":45.4,"TandT":87.6},{"Attack":"OnePixel","ERM":79.4,"DA":83.5,"PGDT":78.05,"TRADES":74.2,"MART":82.5,"RS":83.5,"IBP":42.5,"PRL":80.4,"TandT":89.7},{"Attack":"Pixle","ERM":0,"DA":0,"PGDT":12.55,"TRADES":11.3,"MART":14.4,"RS":1,"IBP":10.3,"PRL":0,"TandT":17.5},{"Attack":"PGDL2","ERM":1,"DA":0,"PGDT":35.8,"TRADES":36.1,"MART":36.1,"RS":5.2,"IBP":36.1,"PRL":0,"TandT":92.9}];
 
@@ -800,7 +799,7 @@
             draw("Std Acc");
             d3.select("#metric-select").on("change", function() { draw(this.value); });
            
-            // Legend
+      
             const lSvg = d3.select("#legend");
             const legendWidth = 300;
             lSvg.attr("width", legendWidth).attr("height", 40);
@@ -840,7 +839,7 @@
 
             const line = d3.line().x(d => x(d.Attack)).y(d => y(d.val));
 
-            // Controls
+            
             const ctrls = d3.select("#approach-controls");
             ctrls.html('');
             approaches.forEach(app => {
