@@ -4,9 +4,9 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Consolidated IDV Assignments (1-4) - All Sections Visible</title>
-    
+   
     <script src="https://d3js.org/d3.v7.min.js"></script>
-    
+   
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -23,10 +23,7 @@
     </script>
 
     <style>
-        /* ================================================================= */
-        /* GLOBAL ALIGNMENT & WIDTH CONSTRAINT (900px)                       */
-        /* ================================================================= */
-        
+       
         body {
             background-color: #f6f8fa;
             color: #111827;
@@ -40,34 +37,88 @@
 
         .main-wrapper {
             width: 100%;
-            max-width: 900px; /* THE CONSISTENT WIDTH FOR ALL CONTENT */
+            max-width: 900px; 
             background: transparent;
         }
-        
-        /* Ensure all section content containers align left/right */
+       
         .content-container {
             width: 100%;
-            padding: 1rem 0; /* Internal padding for spacing */
+            padding: 1rem 0; 
         }
-        
+       
         hr { border-top: 2px solid #e5e7eb; margin: 3rem 0; }
 
+     
+        header { 
+            text-align: left; 
+            width: 100%; 
+            margin-bottom: 2rem;
+        }
+     
+        header h1 {
+            font-size: 30px;
+            font-weight: 800; 
+            color: #111827;
+            text-align: left;
+            border-bottom: none; 
+            padding-bottom: 0; 
+            margin-top: 0;
+            margin-bottom: 0.5rem;
+            line-height: 1.2;
+        }
 
-        /* ================================================================= */
-        /* LEGACY SECTION STYLES (A1, A2, A3) - TailWind Reset Protection    */
-        /* ================================================================= */
+
+        .section-header-2 { 
+            font-size: 24px; 
+            font-weight: 700; 
+            color: #111827;
+            text-align: left; 
+            padding-bottom: 5px; 
+            border-bottom: 2px solid black; 
+            margin-top: 3rem; 
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+       
+        h3.text-xl.font-semibold.text-center.mt-6.mb-4.text-gray-800,
+        h3.text-xl.font-semibold.text-center.mt-12.mb-4.text-gray-800 {
+            font-size: 18px; 
+            font-weight: 600;
+            text-align: left; 
+            color: #6b7280; 
+            margin-top: 1.5rem;
+            margin-bottom: 0.8rem;
+            border-bottom: none; 
+            padding-bottom: 0;
+        }
         
-        #content-consolidated h1 { font-size: 24px; font-weight: 700; margin-bottom: 1rem; display: block; }
-        /* Adjusted heading styles for the new consolidated layout */
-        .section-header-2 { font-size: 20px; font-weight: 600; margin-top: 3rem; margin-bottom: 1rem; text-align: center; display: block; }
-        
-        /* A1 Table Styles */
+       
+        .intro-body-text {
+            text-align: justify;
+            margin-top: 1rem;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+            color: #374151; 
+        }
+
+
+       
+        #content-consolidated h1 { 
+            font-size: 24px; font-weight: 700; margin-bottom: 1rem; display: block; 
+            text-align: left !important; 
+            padding-bottom: 5px !important; 
+            border-bottom: 2px solid black !important;
+            margin-top: 3rem !important; 
+            margin-bottom: 1.5rem !important;
+        }
+       
+       
         #psiTable { width: 100%; border-collapse: collapse; background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 5px rgba(0,0,0,0.05); margin-bottom: 1rem; }
         #psiTable th, #psiTable td { border: 1px solid #ddd; padding: 12px; text-align: center; }
         #psiTable th { background-color: #007aff; color: white; font-weight: bold; }
         #psiTable tr:nth-child(even) { background-color: #f9f9f9; }
 
-        /* A2 Gallery Styles - ADDED CONTAINER STYLES (background, rounded corners, shadow) */
+       
         .gallery-wrapper {
             background: white;
             border-radius: 8px;
@@ -86,9 +137,9 @@
         .mirror { transform: scaleX(-1); } .rot180 { transform: rotate(180deg); } 
         .squeezeY { transform: scaleY(0.5); } .grayscale { filter: grayscale(100%); }
 
-        /* A3 Charts Container - FORCED BACK TO ORIGINAL SIZE AND CENTERING */
+        
         .a3-chart-wrapper {
-            /* This div wraps ALL A3 charts and keeps them centered */
+            
             width: 100%;
             background: white;
             border-radius: 10px;
@@ -97,15 +148,15 @@
         }
 
         .a3-card {
-            /* Each card is now aligned centrally within the 900px block */
+            
             margin: 1rem auto;
             border: 1px solid #eee;
             border-radius: 8px;
             padding: 10px;
+           
             
-            /* Apply original max-width constraints based on A3 viewboxes */
-            max-width: 540px; /* A safe max-width that covers 460px, 480px, 520px viewboxes */
-            width: 100%; /* Ensures it centers nicely */
+            max-width: 540px; 
+            width: 100%; 
         }
         .a3-title { font-weight: 800; font-size: 14px; margin-bottom: 4px; }
         .a3-sub { font-size: 10px; color: #666; margin-bottom: 8px; }
@@ -113,27 +164,30 @@
         .a3-chart-wrapper .legend{font-size:9px;fill:#374151;cursor:pointer}
 
 
-        /* ================================================================= */
-        /* A4 SECTION STYLES (Heatmap & Line)                                */
-        /* ================================================================= */
         .chart-container { background: white; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); }
         #heatmap, #linechart { width: 100%; height: auto; }
         .tooltip { position: absolute; padding: 8px 12px; font-size: 14px; background: #1f2937; color: white; border-radius: 6px; pointer-events: none; opacity: 0; transition: opacity 0.2s; z-index: 50; }
+       
         
-        /* Used for D3 axes in A4 */
         .axis-label { fill: #374151; font-weight: 500; font-size: 12px; }
     </style>
 </head>
 <body>
 
     <div class="main-wrapper">
-        <header class="text-center mb-8">
-            <h1 class="text-3xl font-bold text-gray-800">Consolidated IDV Assignments 1–4</h1>
-            <p class="text-gray-500 mt-2">Data Visualization Portfolio (900px Aligned)</p>
+        <header class="mb-8">
+            <h1 class="text-3xl font-bold text-gray-800">ASSIGNMENT 5: UNIFIED ASSIGNMENTS 1-4</h1>
+            
         </header>
+        
+        
+        <div class="intro-body-text">
+            This webpage presents fulfilled Assignment 5, which consists of a set of interactive data-visualizations and consolidates 4 previous assignments of the course. As per requirements of Assignmen 5, these assignments are merged into one webpage by extracting the **body** content and injecting it into a styled **section**, and then displaying all of them inside a unified design, which I had to adjust throughout the page, so all the parts of the assignment look consistent stylistically. For instance, I left aligned all the headers and made sure they are of the same size and color; placed each assignment into a container with rounded corners and of the same width. There have been some structural difficulties faced during completion of this assignment. Namely, one of the assignments loaded D3.js external library while others contained inline JS, while all the separate assignment webpages were built in a way that they are running on their separate pages, not on one page altogether. Also, some scripts were overwriting other variables. However, the biggest challenge was to resolve the CSS conflicts by isolating them, since each assignment used its own styling and combining them was breaking the layout. Assignment 3 and 4 were the hardest to merge, beacuse they are both heavy on JavaScript code and used D3.js libraries, which were overwriting each other since they both defined certain global variables.
+        </div>
+        
 
         <div id="content-consolidated" class="content-container block">
-            
+           
             <section>
                 <h2 class="section-header-2">Assignment 1: PSI Readings</h2>
                 <div class="content-container">
@@ -168,10 +222,10 @@
 
             <section>
                 <h2 class="section-header-2">Assignment 3: Interactive Charts (Original Proportions)</h2>
-                
+               
                 <div class="a3-chart-wrapper"> 
                     <p class="text-center text-sm text-gray-500 mb-4">Charts are displayed at their original, smaller proportions (max 520px) and centered.</p>
-                    
+                   
                     <div class="a3-card">
                         <div class="a3-title">1) Optimisation Route</div>
                         <div class="a3-sub">Click anywhere to set the goal; path re-routes along a smooth ribbon</div>
@@ -206,7 +260,7 @@
                 <h2 class="section-header-2">Assignment 4: Advanced Visualizations</h2>
 
                 <h3 class="text-xl font-semibold text-center mt-6 mb-4 text-gray-800">A4: Heatmap</h3>
-                
+               
                 <div class="content-container">
                     <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-6 p-4 bg-white rounded-xl shadow-sm border border-gray-100">
                         <label for="metric-select" class="font-semibold text-primary-accent">Select Metric:</label>
@@ -227,7 +281,7 @@
                     </div>
                 </div>
                 <h3 class="text-xl font-semibold text-center mt-12 mb-4 text-gray-800">A4: Line Chart</h3>
-                
+               
                 <div class="content-container">
                     <div class="chart-container p-4 mb-6">
                         <h3 class="text-sm font-bold text-primary-accent mb-3 border-b pb-2">Toggle Approaches:</h3>
@@ -245,7 +299,7 @@
         <div id="tooltip" class="tooltip"></div>
 
     </div> 
-    
+   
     <script>
         // --- Shared Helper for A3 SVGs ---
         function svgEl(tag, attrs={}, children=[]){
@@ -283,11 +337,8 @@
         }
 
 
-        /* -----------------------------------------------------
-            MIGRATED SCRIPTS (All Assignments)
-        ----------------------------------------------------- */
 
-        // NOTE: Renamed the main script wrapper to 'initAllScripts'
+        
         function initAllScripts() {
             // --- A1: PSI ---
             (async function() {
@@ -296,14 +347,14 @@
                     const data = await res.json();
                     const r = data.items[0].readings;
                     const regions = Object.keys(r["psi_twenty_four_hourly"]);
-                    
+                   
                     document.getElementById("timestamp").textContent = "Updated: " + new Date(data.items[0].update_timestamp).toLocaleString();
                     const hRow = document.getElementById("header-row");
                     const body = document.getElementById("table-body");
-                    
+                   
                     hRow.innerHTML = "<th>Reading Type</th>";
                     body.innerHTML = "";
-                    
+                   
                     regions.forEach(reg => {
                         const th = document.createElement("th");
                         th.textContent = reg.charAt(0).toUpperCase() + reg.slice(1);
@@ -325,14 +376,14 @@
                 } catch(e) { document.getElementById("timestamp").textContent = "Failed to load PSI data"; }
             })();
 
-            // --- A2: Gallery ---
+           
             (function(){
                 const files = Array.from({length:10}, (_,i)=>`svg${i+1}.svg`);
                 const tbody = document.querySelector('#gallery tbody');
                 if(!tbody) return;
-                
+               
                 tbody.innerHTML = "";
-                
+               
                 files.forEach(f => {
                     const tr = document.createElement('tr');
                     ['', 'mirror', 'rot180', 'squeezeY', 'grayscale'].forEach((effect, i) => {
@@ -348,10 +399,10 @@
                 });
             })();
 
-            // --- A3: Charts (Fixed Logic) ---
+           
             const A3_PURPLE = '#6d28d9', A3_PURPLE_2 = '#8b5cf6', A3_TEAL = '#0ea5a8', A3_GOLD = '#f59e0b', A3_ROSE = '#ef4444';
 
-            /* ---------- 1: Optimisation Route ---------- */
+           
             (function(){
                 const svg = document.getElementById("c1"); if(!svg) return;
                 svg.innerHTML = '';
@@ -415,7 +466,7 @@
                 });
             })();
 
-            /* ---------- 2: Frequency Area ---------- */
+            
             (function(){
                 const svg = document.getElementById("c2"); if(!svg) return;
                 svg.innerHTML = '';
@@ -467,7 +518,7 @@
                     group.addEventListener("click",()=>{ s.on=!s.on; rect.setAttribute("opacity", s.on?1:0.25); text.setAttribute("opacity", s.on?1:0.35); drawAreas(); });
                 });
 
-                // click to inspect year
+                
                 const marker = svgEl("line",{x1:0,y1:m.t, x2:0,y2:H-m.b, stroke:A3_ROSE,"stroke-width":"1.1", opacity:"0"});
                 svg.appendChild(marker);
                 const pipG = svgEl("g",{}); svg.appendChild(pipG);
@@ -533,7 +584,7 @@
                 function label(x,y,t,fs=11){ const tx = svgEl("text",{x,y,"font-size":String(fs),"font-weight":"700",fill:"#2f2f2f","text-anchor":"middle"},[]); tx.textContent=t; return tx; }
                 RG.appendChild(label(centerX, centerY+2, "VII", 12));
                 RG.appendChild(label(cxL - R*0.40, cyL + R*0.15, "I"));
-                RG.appendChild(label(cxT,         cyT + R*0.05, "II"));
+                RG.appendChild(label(cxT,      cyT + R*0.05, "II"));
                 RG.appendChild(label(cxR + R*0.38, cyR + R*0.20, "III"));
 
                 const RFull = svgEl("g",{opacity:"0"});
@@ -551,7 +602,7 @@
                 gV.appendChild(centerBtn);
             })();
 
-            /* ---------- 4: Cross-Validation Accuracy (Bars) ---------- */
+            
             (function(){
                 const svg = document.getElementById("c4"); if(!svg) return;
                 svg.innerHTML = '';
@@ -606,7 +657,7 @@
             })();
 
 
-            /* ---------- 5: Probability Density ---------- */
+            
             (function(){
                 const svg = document.getElementById("c5"); if(!svg) return;
                 svg.innerHTML = '';
@@ -678,10 +729,10 @@
                 });
             })();
 
-            // --- A4: Heatmap (initHeatmap contents migrated) ---
+            
             initHeatmap();
 
-            // --- A4: Line Chart (initLinechart contents migrated) ---
+            
             initLinechart();
         }
 
@@ -717,7 +768,7 @@
             function draw(metric) {
                 const data = rawData1.filter(d => d["Metric Group"] === metric);
                 const cells = svg.selectAll(".cell").data(data, d => d.Approach+d.Dataset);
-                
+               
                 cells.enter().append("rect").attr("class", "cell")
                     .attr("x", d => x(d.Dataset)).attr("y", d => y(d.Approach))
                     .attr("width", x.bandwidth()).attr("height", y.bandwidth())
@@ -728,10 +779,10 @@
                         d3.select(e.currentTarget).style("stroke", "#FFA726").style("stroke-width", "3px");
                     })
                     .on("mouseout", (e) => {
-                         tooltip.style("opacity", 0);
-                         d3.select(e.currentTarget).style("stroke", "#ffffff").style("stroke-width", "1px");
+                             tooltip.style("opacity", 0);
+                             d3.select(e.currentTarget).style("stroke", "#ffffff").style("stroke-width", "1px");
                     });
-                
+               
                 cells.transition().duration(500).style("fill", d => color(d.Value));
                 cells.exit().remove();
 
@@ -748,7 +799,7 @@
 
             draw("Std Acc");
             d3.select("#metric-select").on("change", function() { draw(this.value); });
-            
+           
             // Legend
             const lSvg = d3.select("#legend");
             const legendWidth = 300;
@@ -776,7 +827,7 @@
             const approaches = Object.keys(rawData2[0]).filter(k => k !== 'Attack');
             const attacks = rawData2.map(d => d.Attack);
             let visible = ["TandT", "PGDT", "ERM"];
-            
+           
             const x = d3.scalePoint().domain(attacks).range([0, width]);
             const y = d3.scaleLinear().domain([0, 100]).range([height, 0]);
             const color = d3.scaleOrdinal(d3.schemeCategory10).domain(approaches);
@@ -815,8 +866,7 @@
             update();
         }
 
-        // --- Init ---
-        // Call the consolidated init function directly
+        
         initAllScripts();
     </script>
 </body>
